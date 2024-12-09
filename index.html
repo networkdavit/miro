@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Reveal with Limits</title>
+  <style>
+
+.arrow {
+  font-size: 24px;
+  margin-top: 5px;
+  color: #000;
+  text-align: center;
+}
+
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff9c4; 
+  color: #000;
+  transition: all 0.3s;
+  width: 300px; 
+  text-align: center; 
+  display: block; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Main Button -->
+    <button class="button" id="mainButton">1. Создание Карточки Товара</button>
+    <div class="arrow" id="arrow1">↓</div>
+    <!-- Reveal Row -->
+    <div class="row hidden" id="revealRow">
+      <div class="column" id="leftColumn">
+        <button class="button" id="leftButton">1. Название и ключевые слова</button>
+        <div class="arrow hidden" id="arrow2">↓</div>
+        
+      </div>
+      <div class="column" id="rightColumn">
+        <button class="button" id="rightButton">4. Фото контент</button>
+        <div class="arrow hidden" id="arrow2">↓</div>
+      </div>
+    </div>
+
+    <div class="centered hidden" id="centeredContainer"></div>
+  </div>
+
+  <script>
+    const mainButton = document.getElementById('mainButton');
+    const revealRow = document.getElementById('revealRow');
+    const leftColumn = document.getElementById('leftColumn');
+    const rightColumn = document.getElementById('rightColumn');
+    const centeredContainer = document.getElementById('centeredContainer');
+
+    let leftCounter = 1;
+    let rightCounter = 1;
+    let centerCounter = 0;
+
+
+
+    const leftTexts = [
+  "1. Название и ключевые слова",
+  'Задача: Использовать аналитику озона для поиска популярных запросов и ключевых слов.Комментарий: Название должно быть четким и содержать основные ключевые слова.Пример: "Аккумуляторный Шуруповерт Макита 12 вольт / Дрель-Шуруповерт"',
+  "2. Ценообразование (вводятся сразу)",
+  "Задача: Цена товара должна быть от 20% маржи с учетом акций ИЛИ в 3,5 раза выше закупочной цены.",
+  "3. Характеристики",
+  "Задача: Использовать информацию с похожих товаров для сбора характеристик. Пример: Для шуруповерта Макита указать вольтаж, скорость вращения, максимальный крутящий момент и прочее."
+];
+
+const rightTexts = [
+  "4. Фото контент",
+  "Задача: Добавить высококачественные фотографии товара с разных ракурсов.Пример: Фотографии шуруповерта Макита должны показывать его с разных сторон, а также в действии, если это возможно.",
+  "5. Рич контент",
+  "Задача: Подчеркнуть ключевые особенности и преимущества товара.Пример: Для шуруповерта Макита это могут быть его компактный размер, мощность и надежность.",
+  "6. Фото и видео съемка товаров",
+  "Задача: Использовать разные ракурсы и освещение для создания привлекательных фото и видео.Комментарий: Показать товар в действии для демонстрации его преимуществ."
+];
+
+let leftIndex = 0;
+let rightIndex = 0;
+
+function addArrowToStep(column, arrowId) {
+  const arrow = document.createElement('div');
+  arrow.className = 'arrow hidden';
+  arrow.id = arrowId;
+  arrow.textContent = '↓';
+  column.appendChild(arrow);
+}
+
+leftColumn.addEventListener('click', (event) => {
+  if (event.target.tagName === 'BUTTON' && leftIndex < leftTexts.length - 1) {
+    leftIndex++;
+    const newButton = document.createElement('button');
+    newButton.className = 'button';
+    newButton.textContent = leftTexts[leftIndex];
+    leftColumn.appendChild(newButton);
+    
+    addArrowToStep(leftColumn, `arrowLeft${leftIndex}`);
+    
+    event.target.disabled = true; 
+  } else if (leftIndex === leftTexts.length - 1 && rightIndex === rightTexts.length - 1 && centerCounter < 2) {
+    createCenteredButton();
+  }
+});
+
+rightColumn.addEventListener('click', (event) => {
+  if (event.target.tagName === 'BUTTON' && rightIndex < rightTexts.length - 1) {
+    rightIndex++;
+    const newButton = document.createElement('button');
+    newButton.className = 'button';
+    newButton.textContent = rightTexts[rightIndex];
+    rightColumn.appendChild(newButton);
+    
+    addArrowToStep(rightColumn, `arrowRight${rightIndex}`);
+    
+    event.target.disabled = true;
+  } else if (rightIndex === rightTexts.length - 1 && leftIndex === leftTexts.length - 1 && centerCounter < 2) {
+    createCenteredButton();
+  }
+});
+
+
+
+    function getRandomPlaceholder() {
+      const randomIndex = Math.floor(Math.random() * placeholderTexts.length);
+      return placeholderTexts[randomIndex];
+    }
+
+    mainButton.addEventListener('click', () => {
+      revealRow.classList.remove('hidden');
+    });
+
+    leftColumn.addEventListener('click', (event) => {
+      if (event.target.tagName === 'BUTTON' && leftCounter < 6) {
+        leftCounter++;
+        const newButton = document.createElement('button');
+        newButton.className = 'button';
+        newButton.textContent = getRandomPlaceholder();
+        leftColumn.appendChild(newButton);
+      } else if (leftCounter === 6 && centerCounter < 2) {
+        createCenteredButton();
+      }
+    });
+
+    rightColumn.addEventListener('click', (event) => {
+      if (event.target.tagName === 'BUTTON' && rightCounter < 6) {
+        rightCounter++;
+        const newButton = document.createElement('button');
+        newButton.className = 'button';
+        newButton.textContent = getRandomPlaceholder();
+        rightColumn.appendChild(newButton);
+      } else if (rightCounter === 6 && centerCounter < 2) {
+        createCenteredButton();
+      }
+    });
+
+
+    function createCenteredButton() {
+  centerCounter++;
+  const newButton = document.createElement('button');
+  newButton.className = 'button';
+
+  let arrowId = '';
+
+  if (centerCounter === 1) {
+    newButton.textContent = '7. Оценка карточек';
+    arrowId = 'arrowCenter1';  
+  } else if (centerCounter === 2) {
+    newButton.textContent = 'Задача: Убедиться, что карточка товара оптимизирована для поисковых систем.\nКомментарий: Проверить использование ключевых слов в названии, описании и метатегах.\nМенеджер проверяет через 5 дней.';
+    arrowId = 'arrowCenter2';  
+  }
+
+  centeredContainer.appendChild(newButton);
+  centeredContainer.classList.remove('hidden');
+
+  const arrow = document.createElement('div');
+  arrow.className = 'arrow hidden';
+  arrow.id = arrowId;  
+  arrow.textContent = '↓'; 
+
+  centeredContainer.appendChild(arrow);
+
+  newButton.addEventListener('click', () => {
+    if (centerCounter < 2) {
+      createCenteredButton();
+    }
+
+    const nextArrow = document.getElementById(arrowId);
+    if (nextArrow) {
+      nextArrow.classList.remove('hidden');
+    }
+  });
+}
+
+
+const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const step4 = document.getElementById('step4');
+
+    const arrow1 = document.getElementById('arrow1');
+    const arrow2 = document.getElementById('arrow2');
+    const arrow3 = document.getElementById('arrow3');
+
+    function unlockStep(currentStep, nextStep, currentArrow) {
+      currentStep.addEventListener('click', () => {
+        if (nextStep.classList.contains('hidden')) {
+          nextStep.classList.remove('hidden');
+          currentArrow.classList.remove('hidden');
+        }
+      });
+    }
+
+    unlockStep(step1, step2, arrow1);
+    unlockStep(step2, step3, arrow2);
+    unlockStep(step3, step4, arrow3);
+
+  </script>
+</body>
+</html>
