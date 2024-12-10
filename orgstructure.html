@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Организационная структура компании</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .button {
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      background-color: #fff9c4;
+      color: #000;
+      text-align: center;
+      display: inline-block;
+      width: 280px;
+      transition: all 0.3s;
+    }
+    .link {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      background-color: #c6e1ff;
+      color: #000;
+      text-align: center;
+      width: 300px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      text-decoration: none;
+    }
+    .column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+    .header_button {
+        background-color: rgb(152, 152, 184);
+    }
+    .top-buttons {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin: 10px 20px;
+    }
+    .top-buttons a {
+      text-decoration: none;
+      font-size: 18px;
+      padding: 10px;
+      background-color: rgb(152, 152, 184);
+      color: white;
+      border-radius: 5px;
+    }
+
+    .pdf_link{
+
+      position: fixed;
+      bottom: 10px; /* Distance from the bottom */
+      right: 10px;  /* Distance from the right */
+      margin: 0;    /* Remove default margin */
+      background-color: rgba(0, 0, 0, 0.7); /* Optional: Add background for better visibility */
+      color: white; /* Text color */
+      padding: 10px; /* Padding around text */
+      border-radius: 5px; /* Optional: Rounded corners */
+    
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Left and Right Buttons -->
+  <div class="top-buttons">
+    <a href="itempublication.html" class="header_button">Раздел 2 - Публикация товара</a>
+    <a href="index.html" class="header_button">Создание Карточки Товара</a>
+  </div>
+
+  <div class="container">
+    <!-- Main Position (Ген директор Павел) -->
+    <button class="button">Ген директор: Павел</button>
+
+    <div class="row">
+      <!-- Department Selection (Отдел Продаж and Отдел Склада) -->
+      <div class="column">
+        <button class="button">Отдел Продаж</button>
+        <div class="column">
+          <button class="link">Тимлид аналитик: Александр</button>
+          <a href="https://docs.google.com/document/d/17x5duH5dEgfcaayZUy77K7Wl-elVTVINLBt4d6gQ48z8/edit?usp=sharing" class="link">Тимлид аналитик: Александр</a>
+          <button class="link">Менеджер: Анастасия</button>
+          <a href="https://docs.google.com/document/d/17x5duH5dEgfcaayZUy77K7Wl-elVTVINLBt4d6gQ48z8/edit?usp=sharing" class="link">Менеджер: Анастасия</a>
+        </div>
+      </div>
+
+      <div class="column">
+        <button class="button">Отдел Склада</button>
+        <div class="column">
+          <button class="link">Старший упаковщик: Хадим</button>
+          <a href="https://docs.google.com/document/d/17x5duH5dEgfcaayZUy77K7Wl-elVTVINLBt4d6gQ48z8/edit?usp=sharing" class="link">Старший упаковщик: Хадим</a>
+          <button class="link">Упаковщик</button>
+          <a href="https://docs.google.com/document/d/17x5duH5dEgfcaayZUy77K7Wl-elVTVINLBt4d6gQ48z8/edit?usp=sharing" class="link">Упаковщик</a>
+        </div>
+      </div>
+    </div>
+    <a href="Qaylee.pdf" target="_blank">
+        <p class="pdf_link">welcomebook</p>
+    </a>
+    
+  </div>
+
+</body>
+</html>

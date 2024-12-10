@@ -3,17 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Button Reveal with Limits</title>
+  <title>Создание Карточки Товара</title>
   <style>
-
-.arrow {
-  font-size: 24px;
-  margin-top: 5px;
-  color: #000;
-  text-align: center;
-}
-
-
+    .arrow {
+      font-size: 24px;
+      margin-top: 5px;
+      color: #000;
+      text-align: center;
+    }
     body {
       font-family: Arial, sans-serif;
       display: flex;
@@ -22,6 +19,7 @@
       min-height: 100vh;
       margin: 0;
       background-color: #f5f5f5;
+      position: relative;
     }
 
     .container {
@@ -30,22 +28,51 @@
     }
 
     .button {
-  padding: 10px 20px;
-  margin: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  background-color: #fff9c4; 
-  color: #000;
-  transition: all 0.3s;
-  width: 300px; 
-  text-align: center; 
-  display: block; 
-  margin-left: auto; 
-  margin-right: auto; 
-}
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #fff9c4;
+      color: #000;
+      transition: all 0.3s;
+      width: 300px;
+      text-align: center;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
+    /* Container for the buttons at top-left and top-right */
+    .top-buttons {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    .header_button{
+        background-color: rgb(152, 152, 184);
+    }
+
+    .top-buttons p {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .top-left {
+      text-align: left;
+      
+    }
+
+    .top-right {
+      text-align: right;
+    }
 
     .row {
       display: flex;
@@ -66,9 +93,35 @@
       align-items: center;
       margin-top: 20px;
     }
+
+    .header_button {
+        background-color: rgb(152, 152, 184);
+    }
+    .top-buttons {
+      display: flex;
+      justify-content: space-between;
+      width: 95%;
+      margin: 10px 20px;
+    }
+    .top-buttons a {
+      text-decoration: none;
+      font-size: 18px;
+      padding: 10px;
+      background-color: rgb(152, 152, 184);
+      color: white;
+      border-radius: 5px;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Top Left and Right Buttons -->
+  <div class="top-buttons">
+    <a href="itempublication.html" class="header_button">Раздел 2 - Публикация товара</a>
+    <a href="orgstructure.html" class="header_button">Организационная структура компании</a>
+  </div>
+
+
   <div class="container">
     <!-- Main Button -->
     <button class="button" id="mainButton">1. Создание Карточки Товара</button>
@@ -211,18 +264,20 @@ rightColumn.addEventListener('click', (event) => {
     arrowId = 'arrowCenter1';  
   } else if (centerCounter === 2) {
     newButton.textContent = 'Задача: Убедиться, что карточка товара оптимизирована для поисковых систем.\nКомментарий: Проверить использование ключевых слов в названии, описании и метатегах.\nМенеджер проверяет через 5 дней.';
-    arrowId = 'arrowCenter2';  
+    arrowId = '';  // Do not create an arrow for this button
   }
 
   centeredContainer.appendChild(newButton);
   centeredContainer.classList.remove('hidden');
 
-  const arrow = document.createElement('div');
-  arrow.className = 'arrow hidden';
-  arrow.id = arrowId;  
-  arrow.textContent = '↓'; 
-
-  centeredContainer.appendChild(arrow);
+  // Only create an arrow if arrowId is not empty
+  if (arrowId !== '') {
+    const arrow = document.createElement('div');
+    arrow.className = 'arrow hidden';
+    arrow.id = arrowId;  
+    arrow.textContent = '↓'; 
+    centeredContainer.appendChild(arrow);
+  }
 
   newButton.addEventListener('click', () => {
     if (centerCounter < 2) {
@@ -235,6 +290,7 @@ rightColumn.addEventListener('click', (event) => {
     }
   });
 }
+
 
 
 const step1 = document.getElementById('step1');

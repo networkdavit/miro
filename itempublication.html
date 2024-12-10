@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Публикация товара</title>
+  <style>
+    .arrow {
+      font-size: 24px;
+      margin-top: 5px;
+      color: #000;
+      text-align: center;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f5f5f5;
+      position: relative;
+    }
+
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #fff9c4;
+      color: #000;
+      transition: all 0.3s;
+      width: 300px;
+      text-align: center;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Container for the buttons at top-left and top-right */
+    .top-buttons {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    .header_button{
+        background-color: rgb(152, 152, 184);
+    }
+
+    .top-buttons p {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .top-left {
+      text-align: left;
+      
+    }
+
+    .top-right {
+      text-align: right;
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .header_button {
+        background-color: rgb(152, 152, 184);
+    }
+    .top-buttons {
+      display: flex;
+      justify-content: space-between;
+      width: 95%;
+      margin: 10px 20px;
+    }
+    .top-buttons a {
+      text-decoration: none;
+      font-size: 18px;
+      padding: 10px;
+      background-color: rgb(152, 152, 184);
+      color: white;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+    <div class="top-buttons">
+        <a href="index.html" class="header_button">Создание Карточки Товара</a>
+        <a href="orgstructure.html" class="header_button">Организационная структура компании</a>
+      </div>
+  <div class="container">
+    <!-- Main Button -->
+    <button class="button" id="mainButton">2. Публикация товара</button>
+    <div class="arrow" id="arrow1">↓</div>
+    <!-- Reveal Row -->
+    <div class="row hidden" id="revealRow">
+      <div class="column" id="leftColumn">
+        <button class="button" id="option1">1. Добавление фото и кода товара в таблицу “Экономика”</button>
+      </div>
+      <div class="column" id="centerColumn">
+        <button class="button" id="option2">2. Работа с фото</button>
+      </div>
+      <div class="column" id="rightColumn">
+        <button class="button" id="option3">3. Выкладывание нового товара</button>
+      </div>
+    </div>
+    <!-- Centered Buttons -->
+    <div class="centered hidden" id="centeredContainer"></div>
+  </div>
+
+  <script>
+    const mainButton = document.getElementById('mainButton');
+    const revealRow = document.getElementById('revealRow');
+    const leftColumn = document.getElementById('leftColumn');
+    const centerColumn = document.getElementById('centerColumn');
+    const rightColumn = document.getElementById('rightColumn');
+    const centeredContainer = document.getElementById('centeredContainer');
+
+    const leftTexts = [
+      "Добавить фото и код товара (если не был ранее в продаже) в таблицу “Экономика”"
+    ];
+
+    const centerTexts = [
+      "Добавить артикул в лист Магазин (в юнитке)"
+    ];
+
+    const rightTexts = [
+      "Взяли у поставщика",
+      "Провели приемку товара",
+      "Присвоили номер",
+      "Сфотографировали",
+      "Добавили фото на диск",
+      "Выложили товар",
+      "Сверились с наличием"
+    ];
+
+    // Function to add arrow under each step (except for the excluded ones)
+    function addArrowToStep(column, arrowId, stepText) {
+      const excludedSteps = [
+        "Добавить фото и код товара (если не был ранее в продаже) в таблицу “Экономика”",
+        "Добавить артикул в лист Магазин (в юнитке)",
+        "Сверились с наличием"
+      ];
+
+      // Only add arrow if the step text is not in the excluded steps list
+      if (!excludedSteps.includes(stepText)) {
+        const arrow = document.createElement('div');
+        arrow.className = 'arrow';
+        arrow.id = arrowId;
+        arrow.textContent = '↓';
+        column.appendChild(arrow); // Add the arrow under the button
+      }
+    }
+
+    function addNextButton(column, texts, index) {
+      if (index < texts.length) {
+        // Check if the button for this step already exists
+        if (column.querySelectorAll('.created').length > index) return;
+
+        const newButton = document.createElement('button');
+        newButton.className = 'button created';  // Add a class to identify already created buttons
+        newButton.textContent = texts[index];
+        column.appendChild(newButton);
+
+        // Add an arrow to the step if it should not be excluded
+        addArrowToStep(column, `arrow-${index}`, texts[index]);
+
+        // Disable the button after it is clicked to prevent multiple clicks
+        newButton.addEventListener('click', () => {
+          // Create the next step
+          addNextButton(column, texts, index + 1);
+          // Disable the button to prevent it from opening again
+          newButton.disabled = true;
+        });
+      }
+    }
+
+    mainButton.addEventListener('click', () => {
+      revealRow.classList.remove('hidden');
+    });
+
+    leftColumn.addEventListener('click', () => {
+      if (leftColumn.childElementCount === 1) {
+        addNextButton(leftColumn, leftTexts, 0);
+      }
+    });
+
+    centerColumn.addEventListener('click', () => {
+      if (centerColumn.childElementCount === 1) {
+        addNextButton(centerColumn, centerTexts, 0);
+      }
+    });
+
+    rightColumn.addEventListener('click', () => {
+      if (rightColumn.childElementCount === 1) {
+        addNextButton(rightColumn, rightTexts, 0);
+      }
+    });
+  </script>
+</body>
+</html>
